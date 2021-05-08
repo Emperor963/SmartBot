@@ -21,6 +21,7 @@ async def plot(ctx, *, eqn):
     if 'x' not in fn:  # check 'x' is used in eqn
         print("Error: Equation must have a variable named x")
     x = np.linspace(-10, 10, 100)
+    plt.clf()
     plt.plot(x, fn(x))
     plt.xlabel('x - axis')
     plt.ylabel('y - axis')
