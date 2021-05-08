@@ -29,6 +29,11 @@ async def plot(ctx, *, eqn):
     plt.savefig(img)
     img.seek(0)
     await ctx.send(file=discord.File(img, "graph.png"))
+    
+@bot.command()
+async def latexfind(ctx, *, eqn):
+    fn = Expression(eqn, ['x'])
+    await ctx.send(fn)
 
 
 bot.run("Add token ID here")
