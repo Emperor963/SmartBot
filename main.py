@@ -30,5 +30,5 @@ async def plot(ctx, *, eqn):
     await ctx.send(file=discord.File(img, "graph.png"))
 
 
-bot.run("ODM5NTA2MTUwNjA4MzM4OTc0.YJKpBw.XbrE-_ix8AL5_1DdBI18zbxS-_8")
+bot.run("Add token ID here")
 
