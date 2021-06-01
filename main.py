@@ -7,6 +7,9 @@ from Equation import Expression
 from io import BytesIO
 import discord
 from math import *
+import sympy
+from sympy import *
+from sympy.plotting import *
 
 bot = commands.Bot(command_prefix="!")
 
