@@ -10,6 +10,7 @@ from math import *
 import sympy
 from sympy import *
 from sympy.plotting import *
+from sympy.parsing.sympy_parser import *
 
 bot = commands.Bot(command_prefix="!")
 
@@ -18,33 +19,22 @@ async def math(ctx, *, arg):
     x = numexpr.evaluate(arg)
     await ctx.send(x)
 
-#Edited to a better code for showing the axes with origin at (0,0)
-#Addition of newer types of plots (WIP)
 @bot.command()
 async def plot(ctx,type, *, eqn):
     if type == 'explicit':
-        fn = Expression(eqn, ['x'])
-        if 'x' not in fn:  # check 'x' is used in eqn
-            print("Error: Equation must have a variable named x")
-        ax = plt.axes()
-        ax.spines['left'].set_position('center')
-        ax.spines['bottom'].set_position('center')
-        ax.spines['right'].set_color('none')
-        ax.spines['top'].set_color('none')
-        x = np.linspace(-10, 10, 100)
-        plt.plot(x, fn(x))
-        plt.xlabel('x - axis')
-        plt.ylabel('y - axis')
-        x = np.linspace(-10, 10, 100)
+        x = symbols('x')
+        eqn = eqn.replace("^", "**")
+        transformations = standard_transformations + (implicit_multiplication,)
+        eqn2 = parse_expr(eqn, transformations=transformations, evaluate=False)
+        plt1 = sympy.plot(eqn2, (x, -10, 10), show=False)
         img = BytesIO()
-        plt.savefig(img)
+        plt1.save(img)
         img.seek(0)
         await ctx.send(file=discord.File(img, "graph.png"))
-        plt.clf()
     if type == 'parametric':
         u = symbols('u')
         x_eq, y_eq = eqn.split(", ")
-        eqn.replace("^", "**")
+        eqn = eqn.replace("^", "**")
         plt2 = plot_parametric(x_eq, y_eq, (u, -10, 10,100), show=False)
         img = BytesIO()
         plt2.save(img)
@@ -52,19 +42,26 @@ async def plot(ctx,type, *, eqn):
         await ctx.send(file=discord.File(img, "graph.png"))
     if type == '3d':
         x, y = symbols('x y')
-        eqn.replace("^", "**")
+        eqn = eqn.replace("^", "**")
         plt3 = plot3d(eqn, (x, -10, 10), (y, -10, 10), show=false)
         img = BytesIO()
         plt3.save(img)
         img.seek(0)
         await ctx.send(file=discord.File(img, "graph.png"))
 
-    
+
+
+
 @bot.command()
 async def latexfind(ctx, *, eqn):
     fn = Expression(eqn, ['x'])
     await ctx.send(fn)
 
 
-bot.run("Add token ID here")
+
+
+
+
+
+bot.run("Add Token ID here")
 
