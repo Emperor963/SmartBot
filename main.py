@@ -35,6 +35,7 @@ async def plot(ctx,type, *, eqn):
         plt.plot(x, fn(x))
         plt.xlabel('x - axis')
         plt.ylabel('y - axis')
+        x = np.linspace(-10, 10, 100)
         img = BytesIO()
         plt.savefig(img)
         img.seek(0)
@@ -44,21 +45,19 @@ async def plot(ctx,type, *, eqn):
         u = symbols('u')
         x_eq, y_eq = eqn.split(", ")
         eqn.replace("^", "**")
-        plt = plot_parametric(x_eq, y_eq, (u, -10, 10,100), show=False)
+        plt2 = plot_parametric(x_eq, y_eq, (u, -10, 10,100), show=False)
         img = BytesIO()
-        plt.save(img)
+        plt2.save(img)
         img.seek(0)
         await ctx.send(file=discord.File(img, "graph.png"))
-        plt.clear()
     if type == '3d':
         x, y = symbols('x y')
         eqn.replace("^", "**")
-        plt = plot3d(eqn, (x, -10, 10), (y, -10, 10), show=false)
+        plt3 = plot3d(eqn, (x, -10, 10), (y, -10, 10), show=false)
         img = BytesIO()
-        plt.save(img)
+        plt3.save(img)
         img.seek(0)
         await ctx.send(file=discord.File(img, "graph.png"))
-        plt.clear()
 
     
     
