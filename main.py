@@ -60,7 +60,6 @@ async def plot(ctx,type, *, eqn):
         await ctx.send(file=discord.File(img, "graph.png"))
 
     
-    
 @bot.command()
 async def latexfind(ctx, *, eqn):
     fn = Expression(eqn, ['x'])
